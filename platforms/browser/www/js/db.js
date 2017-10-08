@@ -53,6 +53,22 @@ var DB = {
         }, self.errorCB, function(tx){});
     },
 
+    searchAllMedicineByName: function(name, callback){
+        var self = this;
+        self.db.transaction( function(tx){
+            tx.executeSql( 'SELECT * FROM medicine WHERE name LIKE "%'+name+'%" OR code = "'+name+'"', [], callback, self.errorCB );
+        }, self.errorCB, function(tx){});
+    },
+
+    searchMedicineInCategory: function(name, category_id, callback){
+        var self = this;
+        self.db.transaction( function(tx){
+            console.log('SELECT * FROM medicine WHERE ( name LIKE "%'+name+'%" OR code = "'+name+'") AND category ='+category_id);
+            tx.executeSql( 'SELECT * FROM medicine WHERE ( name LIKE "%'+name+'%" OR code = "'+name+'") AND category ='+category_id, [], callback, self.errorCB );
+        }, self.errorCB, function(tx){});
+    },
+
+
     enterData: function(){
         var self = this;
         $.get( "medicines.json", function( data ) {
@@ -69,7 +85,6 @@ var DB = {
 
                         var query = "INSERT INTO medicine(code, name, price, stock, category) VALUES "+medsArray.join(",");
                         tx.executeSql(query, [], function(tx, results){ console.log("Inserted"); });
-                        console.log(query);
 
                     }, self.errorCB );
                 }, self.errorCB, function(tx){});

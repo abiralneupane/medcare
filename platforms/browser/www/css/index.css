@@ -36,6 +36,7 @@ header.title {
     color: #3d3d3d;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
+    cursor: text;
 }
 
 .search-bar button.btn-search {
