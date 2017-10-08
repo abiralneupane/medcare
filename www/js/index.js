@@ -33,7 +33,7 @@ var app = {
             break;
 
             case 'medicines':
-                self.medicines(app.tempObj.id, app.tempObj.title);
+                app.medicines(app.tempObj.id, app.tempObj.title);
             break
         }
     },
@@ -46,7 +46,7 @@ var app = {
         }
 
         DB.init(function(){
-            $('.loading').hide();
+            //$('.loading').hide();
             app.home();
             
             $('.btn-search').on('click', function(event){
@@ -105,8 +105,9 @@ var app = {
         
         self.screens.current = 'home';
         
-        if( this.categoryPage != "" ){
-            $('.content').html(categoryPage);
+        if( self.categoryPage != "" ){
+            $('.search-bar input[type="text"]').attr('placeholder','Search medicines');
+            $('.content').html(self.categoryPage);
             $('.screen').fadeIn(500);
         }else{
             DB.getCategory(function(tx, results){
@@ -126,10 +127,12 @@ var app = {
 
                 self.categoryPage = html;
 
+                $('.search-bar input[type="text"]').attr('placeholder','Search medicines');
+
                 $('.content').html(html);
                 $('.screen').fadeIn(500);
 
-                $('.category-list .category a').on('click', function(event){
+                $(document).on('click','.category-list .category a', function(event){
                     event.preventDefault();
                     self.screens.prev = self.screens.current;
 

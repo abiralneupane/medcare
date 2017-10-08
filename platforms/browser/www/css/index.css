@@ -26,25 +26,6 @@ body {
 
 h1{ font-weight: 400; }
 
-.separator {}
-
-.loading {
-    position: absolute;
-    z-index: 3;
-    background-color: #839ace;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    text-align: center;
-    color: #fff;
-}
-
-.loading-content {
-    position: relative;
-    top: 32%;
-}
-
 .screen {
     width: 100%;
     text-align: center;
