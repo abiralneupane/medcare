@@ -10,6 +10,8 @@ body {
 
 h1{ font-weight: 400; }
 
+.separator {}
+
 .screen {
     width: 100%;
     text-align: center;
@@ -44,4 +46,38 @@ header.title {
     background-color: transparent;
     border: none;
     border-left: 1px solid #f1ecec;
+}
+
+
+ul.category-list {
+    list-style: none;
+    padding: 0 20px;
+}
+
+ul.category-list li.category{
+    text-align: left;
+}
+
+ul.category-list li.category a {
+    display: block;
+    padding: 11px 0;
+    border-bottom: 1px solid #d4cccc;
+    text-decoration: none;
+    color: #3e3e3e;
+}
+
+ul.category-list li.category a:hover{
+    border-bottom: 1px solid #000;
+}
+
+.medicine-container .medicine {
+    border-bottom: 1px dashed #bdbdbd;
+    padding: 0 10px 20px;
+    text-align: left;
+}
+
+.medicine .medicine-meta {font-style: italic;color: #415453;}
+
+.medicine h4.medicine-name {
+    margin: 10px 0;
 }

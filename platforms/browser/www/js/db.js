@@ -9,14 +9,15 @@ var DB = {
 	setupDatabase: function(){
 		var self = this;
 		self.db.transaction( self.populateDB, self.errorCB, function(){
-            self.enterData();
+            /* Enter dummy data to the database. Run only for the first time */
+            //self.enterData();
         } );
 	},
 
 	populateDB: function(tx){
 
-        //tx.executeSql( 'DROP TABLE category' );
-        // tx.executeSql( 'DROP TABLE medicine' );
+        /*tx.executeSql( 'DROP TABLE category' );
+        tx.executeSql( 'DROP TABLE medicine' );*/
         
         tx.executeSql( 'CREATE TABLE IF NOT EXISTS category ( \
         	id INTEGER PRIMARY KEY AUTOINCREMENT, \
@@ -28,9 +29,14 @@ var DB = {
         	id INTEGER PRIMARY KEY AUTOINCREMENT, \
         	code TEXT NOT NULL, \
         	name TEXT, \
-        	category TEXT, \
-            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP \
+            price TEXT, \
+            category INTEGER, \
+        	stock INTEGER, \
+            date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \
+            FOREIGN KEY(category) REFERENCES category (id) \
         );' );
+
+        console.log("DB created");
     },
 
     getCategory: function(cb){
@@ -42,50 +48,35 @@ var DB = {
 
     getMedicine: function(id, cb){
         var self = this;
-        /*let playlistObj = {
-            id: 0,
-            title: '',
-            songs: []
-        };
         self.db.transaction( function(tx){
-            tx.executeSql( 'SELECT * FROM playlist WHERE id='+id, [], function(tx, playlist){
-                let row = playlist.rows[0];
-                playlistObj.id = row.id;
-                playlistObj.title = row.title;
-
-                let songs = JSON.parse(row.songs);
-
-                if(songs.length > 0 ){
-                    let songQueryPart = '';
-                    for(var i=0; i<songs.length; i++){
-                        songQueryPart += 'id = '+songs[i];
-                        if( i < songs.length - 1 ){
-                            songQueryPart += ' OR ';
-                        }
-                    }
-                    
-                    tx.executeSql( 'SELECT * FROM songs WHERE '+songQueryPart, [], function(tx, songs){
-                        playlistObj.songs = songs.rows;
-
-                        cb(playlistObj);
-
-                    }, self.errorCB );
-
-                }else{
-                    cb(playlistObj);
-                }
-            }, self.errorCB );
-        }, self.errorCB, function(tx){});*/
+            tx.executeSql( 'SELECT * FROM medicine WHERE category = '+id, [], cb, self.errorCB );
+        }, self.errorCB, function(tx){});
     },
 
     enterData: function(){
-        self.db.transaction( function(tx){
-            let query = "INSERT INTO category(name) VALUES ( 'test')";
-            tx.executeSql(query, [], function(){
-                // insert medicine forthat category
-                
-            }, self.errorCB );
-        }, self.errorCB, function(tx){});
+        var self = this;
+        $.get( "medicines.json", function( data ) {
+            $.each(data, function(key, val){
+                self.db.transaction( function(tx){
+                    var query = "INSERT INTO category(name) VALUES ( '"+val.name+"')";
+                    tx.executeSql(query, [], function(tx, results){
+                        var category_id = results.insertId;
+                        
+                        var medsArray = [];
+                        $.each(val.medicines, function(medKey, med){
+                            medsArray.push('("'+med.code+'","'+med.name.replace('"','\\"')+'","'+med.price+'",'+med.stock+','+category_id+')');
+                        });
+
+                        var query = "INSERT INTO medicine(code, name, price, stock, category) VALUES "+medsArray.join(",");
+                        tx.executeSql(query, [], function(tx, results){ console.log("Inserted"); });
+                        console.log(query);
+
+                    }, self.errorCB );
+                }, self.errorCB, function(tx){});
+            });
+        });
+        
+        /**/
     },
 
     errorCB: function(err) {
