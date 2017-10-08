@@ -40,8 +40,13 @@ var app = {
 
     onDeviceReady: function() {
         var self = app;
+        var applaunchCount = window.localStorage.getItem('launchCount');
+        if(!applaunchCount){
+            $('.loading').show();
+        }
 
         DB.init(function(){
+            $('.loading').hide();
             app.home();
             
             $('.btn-search').on('click', function(event){
