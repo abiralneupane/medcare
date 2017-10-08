@@ -1,23 +1,31 @@
 var DB = {
 	db: null,
 
-	init: function(){
+	init: function(callback){
 		this.db = window.openDatabase("db_mypharma", "1.0", "My Pharma", 200000);
-		this.setupDatabase();
+		this.setupDatabase(callback);
 	},
 
-	setupDatabase: function(){
+	setupDatabase: function(callback){
 		var self = this;
-		self.db.transaction( self.populateDB, self.errorCB, function(){
-            /* Enter dummy data to the database. Run only for the first time */
-            //self.enterData();
-        } );
+        /* Install Database and enter dummy content. Run only for the first time */
+        var applaunchCount = window.localStorage.getItem('launchCount');
+        if(!applaunchCount){    
+            self.db.transaction( self.populateDB, self.errorCB, function(){
+                self.enterData(function(tx){
+                    window.localStorage.setItem('launchCount',1);
+                    callback();
+                });
+            } );
+        }else{
+            callback();
+        }
 	},
 
 	populateDB: function(tx){
 
-        /*tx.executeSql( 'DROP TABLE category' );
-        tx.executeSql( 'DROP TABLE medicine' );*/
+        tx.executeSql( 'DROP TABLE category' );
+        tx.executeSql( 'DROP TABLE medicine' );
         
         tx.executeSql( 'CREATE TABLE IF NOT EXISTS category ( \
         	id INTEGER PRIMARY KEY AUTOINCREMENT, \
@@ -69,7 +77,7 @@ var DB = {
     },
 
 
-    enterData: function(){
+    enterData: function(cb){
         var self = this;
         $.get( "medicines.json", function( data ) {
             $.each(data, function(key, val){
@@ -87,7 +95,7 @@ var DB = {
                         tx.executeSql(query, [], function(tx, results){ console.log("Inserted"); });
 
                     }, self.errorCB );
-                }, self.errorCB, function(tx){});
+                }, self.errorCB, cb);
             });
         });
         

@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Quicksand Regular'), local('Quicksand-Regular'), url('../fonts/Quicksand-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Quicksand Bold'), local('Quicksand-Bold'), url('../fonts/Quicksand-Bold.woff2') format('woff2');
+}
+
+
 html, body, h1, p{
     margin:0;
     padding:0;
@@ -21,6 +36,13 @@ header.title {
     padding: 20px;
     background: #839ace;
     color: #fafafa;
+}
+
+.subtitle{
+    background-color: #f9f3f3;
+    padding: 20px;
+    margin-top: 0;
+    font-weight: 400;
 }
 
 .search-bar {
@@ -72,9 +94,10 @@ ul.category-list li.category a:hover{
 }
 
 .medicine-container .medicine {
-    border-bottom: 1px dashed #bdbdbd;
-    padding: 0 10px 20px;
+    order-bottom: 1px dashed #bdbdbd;
+    padding: 0 10px 10px;
     text-align: left;
+    margin-bottom: 30px;
 }
 
 .medicine .medicine-meta {font-style: italic;color: #415453;}
