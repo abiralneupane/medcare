@@ -30,9 +30,13 @@ var app = {
         switch(app.screens.prev){
             case 'home':
                 app.home();
+                app.screens.prev = "";
+                app.screens.current = "home";
             break;
 
             case 'medicines':
+                app.screens.prev = "home";
+                app.screens.current = "medicines";
                 app.medicines(app.tempObj.id, app.tempObj.title);
             break
         }
@@ -55,6 +59,7 @@ var app = {
                 self.screens.current = 'search';
 
                 var btn = $(this);
+                
                 btn.find('i').removeClass('fa-search');
                 btn.find('i').addClass('fa-spinner fa-spin');
 
@@ -92,6 +97,10 @@ var app = {
                         }
 
                         $('.content').html(html);
+
+                        btn.find('i').removeClass('fa-spinner').removeClass('fa-spin');
+                        btn.find('i').addClass('fa-search');
+
                         $('.screen').fadeIn(500);
                     });
                 }    
