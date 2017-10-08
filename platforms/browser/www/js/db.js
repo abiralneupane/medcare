@@ -24,8 +24,8 @@ var DB = {
 
 	populateDB: function(tx){
 
-        tx.executeSql( 'DROP TABLE category' );
-        tx.executeSql( 'DROP TABLE medicine' );
+        /*tx.executeSql( 'DROP TABLE category' );
+        tx.executeSql( 'DROP TABLE medicine' );*/
         
         tx.executeSql( 'CREATE TABLE IF NOT EXISTS category ( \
         	id INTEGER PRIMARY KEY AUTOINCREMENT, \
@@ -79,7 +79,9 @@ var DB = {
 
     enterData: function(cb){
         var self = this;
-        $.get( "medicines.json", function( data ) {
+        var path = window.location.href.replace('index.html', '');
+        $.getJSON(path + "medicines.json", function(data){
+        //$.get( "medicines.json", function( data ) {
             $.each(data, function(key, val){
                 self.db.transaction( function(tx){
                     var query = "INSERT INTO category(name) VALUES ( '"+val.name+"')";
