@@ -46,7 +46,7 @@ var app = {
         }
 
         DB.init(function(){
-            //$('.loading').hide();
+            $('.loading').hide();
             app.home();
             
             $('.btn-search').on('click', function(event){
