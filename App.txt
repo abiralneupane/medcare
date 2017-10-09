@@ -1,0 +1,58 @@
+Tools & Technology
+The application is developed using JavaScript, HTML & CSS. To make the development easy, I have used jQuery in small part of the project. The designing is kept as simple as possible. To make the Web App, android, I have used PhoneGap tool. PhoneGap is a distribution of Apache Cordova. Thus, Cordova is the main hero here, and PhoneGap does all the work sitting above the Cordova.
+The database used is Sqlite. Sqlite is same as MySQL. The database is used through WebSQL API. Checkout the resources for further info
+
+	SQLite: https://www.sqlite.org/about.html
+	WebSQL: http://html5doctor.com/introducing-web-sql-databases/
+	PhoneGap & Cordova: https://en.wikipedia.org/wiki/Apache_Cordova 
+
+How Did I start the development?
+	The work for mobile app development starts with command line tool ( we call it CLI - Command Line Interface ).
+	
+	Steps:
+		1. We first install PhoneGap CLI with NPM in our machine ( http://docs.phonegap.com/getting-started/1-install-phonegap/cli/ )
+		2. Then we install mobile app for PhoneGap ( http://docs.phonegap.com/getting-started/2-install-mobile-app/ )
+		3. We run a command to create a new application ( http://docs.phonegap.com/getting-started/3-create-your-app/cli/ ). It will create a needed file structure with sample application.
+		4. And to preview the app, we run some command in desktop, and after it provide us the IP, we run that IP through mobile application to view our application ( http://docs.phonegap.com/getting-started/4-preview-your-app/cli/ )
+	
+File Structure
+After PhoneGap creates the application, it will create bundle of files needed for mobile application along with the configuration like this:
+|
+|- hooks
+|- platforms
+|- plugins
+|- wwww
+	|- css
+	|- img
+	|- js
+	|- res
+	|- index.html
+|- config.xml
+
+Ignore all other folders except for www. There are other folders in www folder for our projects: fonts, medicines.json, icon.png, splash.png
+
+CSS - All the styling file are added there
+img - Not needed now, but added for future scalability purposes. If you want to add any images in application. "img" is the folder
+js - This is the main file as all the logic is inside this folder
+res - The icons and splash screens for ios and android devices are added here
+medicines.json - It is a files that stores dummy data. It is used to enter the data in the database when you run your application in the mobile for the first time.
+config.xml - It is the configuration file for mobile app. It carries all the information like Author name, icons, splash screen, etc.
+
+How coding is done?
+The programming is done in two files db.js and index.js
+As name says db.js does all the work related to database, and index.js does the main thing in the work. Since PhoneGap generate the script file - index.js when we create a new application, I have gone with the flow. By default, PhoneGap writes the script using Object. This means every methods and variables are bounded by object. So, if you used to call function like this: functionname(); Now we need to call like this: obj.functionname().
+The database query is run using WebSQL API
+
+How compiling of JavaScript is done to Android file ( APK )?
+We need to used two things for this:
+Github ( GIT Repository )
+Adobe ID
+
+After complete application is developed, It should be put in public repository
+
+Glossary
+
+NPM
+Splash Screen
+Asyncronous
+Callback
