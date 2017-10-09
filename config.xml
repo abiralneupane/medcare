@@ -2,10 +2,10 @@
 <widget id="com.phonegap.mypharma" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>My Pharma</name>
     <description>
-        My Pharma is an application developed for easeness of searching the available medicine in the store.
+        My Pharma is about the availibility of the medicine which can be booked online and can be delivered to the doorsteps of the customer
     </description>
-    <author email="abiral.neupane@gmail.com" href="http://abiralneupane.com.np">
-        Abiral Neupane
+    <author email="shankarpoudel75@gmail.com" href="https://www.facebook.com/shankar.poudel.712">
+        Shankar Poudel 
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
